@@ -1,5 +1,7 @@
 package Core;
 
+import com.aventstack.extentreports.MediaEntityBuilder;
+import com.aventstack.extentreports.model.Media;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -39,17 +41,28 @@ public class Driver {
         driver.quit();;
     }
 
-    public static void takeScreenshot(WebDriver driver)  {
+    public static String takeScreenshot(WebDriver driver)  {
         File ss = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 
         SimpleDateFormat dateFormat= new SimpleDateFormat("ddMMyyyy_hhmmss");
-        String timestamp = "Screenshot_"+dateFormat.format(new Date());
+        String fileName = "Screenshot_"+dateFormat.format(new Date())+".png";
+        String path = System.getProperty("user.dir")+"\\reports\\"+fileName;
         try{
 
-            FileUtils.copyFile(ss.getAbsoluteFile(),new File(System.getProperty("user.dir")+"\\src\\main\\screenshots\\"+timestamp+".png"));
+            FileUtils.copyFile(ss.getAbsoluteFile(),new File(path));
         }
         catch (IOException e){
             System.out.println("Cannot Copy file:"+e.getMessage());
         }
+
+        return fileName;
+    }
+
+    public static Media getScreen(WebDriver driver){
+
+       return MediaEntityBuilder.
+               createScreenCaptureFromPath(takeScreenshot(driver))
+               .build();
+
     }
 }

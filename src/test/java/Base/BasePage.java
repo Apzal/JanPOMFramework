@@ -43,10 +43,28 @@ public class BasePage {
         try{
             return getElement(element).isDisplayed();
         }
-        catch (NoSuchElementException e){
+        catch (Exception e){
             System.out.println(e.getMessage());
             return false;
         }
+    }
+
+    protected void clickElement(WebElement element){
+
+       int counter = 3;
+
+       while (counter>=1){
+           try{
+               wait.until(ExpectedConditions.elementToBeClickable(element));
+               element.click();
+               break;
+           }
+           catch (Exception e){
+                counter--;
+           }
+       }
+
+
     }
 
 

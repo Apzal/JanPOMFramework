@@ -1,7 +1,8 @@
 package Pages;
 
 import Base.BasePage;
-import org.openqa.selenium.By;
+import Reports.Reporting;
+import com.aventstack.extentreports.Status;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -33,6 +34,7 @@ public class LoginPage extends BasePage {
         setText(txtUsername,username);
         setText(txtPassword,password);
         submit(btnLogin);
+        Reporting.extentTest.log(Status.INFO,"Entered Username as "+username+", password as "+password);
 
     }
 
